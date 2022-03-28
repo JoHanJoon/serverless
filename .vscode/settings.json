@@ -1,0 +1,8 @@
+{
+  "azureFunctions.javaBuildTool": "maven",
+  "azureFunctions.deploySubpath": "target/azure-functions/serverless220203-1643876136185",
+  "azureFunctions.projectLanguage": "Java",
+  "azureFunctions.projectRuntime": "~4",
+  "debug.internalConsoleOptions": "neverOpen",
+  "azureFunctions.preDeployTask": "package (functions)"
+}
