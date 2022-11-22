@@ -25,17 +25,11 @@ title: Grafana를 이용하여 Azure PlayFab을 모니터링 해보기
 
 Azure PlayFab을 사용하고 있는 게임 서비스 업체와의 미팅 후, Azure PlayFab에 대하여 찾아보았습니다.
 
-## Azure PlayFab이란?
 ![playfab-introduce](images/playfab_intro.png)
+## Azure PlayFab이란?
 
 아시는 분은 아시겠지만, Azure PlayFab은 라이브 게임의 빌드와 운영을 위한 종합적인 LiveOps 백 엔드 플랫폼이라고 정의할 수 있을 텐데요.
-
-PlayFab의 백 엔드 서비스는 게임과 함께 확장되고 플레이어의 참여, 유지, 수익 창출에 도움이 되는 비용 효율적인 개발 솔루션인 스튜디오를
-
-제공하여 게임 개발자의 진입 장벽을 낮출 수 있다고 하며 또한, 개발자가 인텔리전트 클라우드를 사용하여 게임을 빌드 및 운영하고, 게임 데
-
-이터를 분석하고, 전반적인 게임 환경을 개선할 수 있다고도 합니다.
-
+PlayFab의 백 엔드 서비스는 게임과 함께 확장되고 플레이어의 참여, 유지, 수익 창출에 도움이 되는 비용 효율적인 개발 솔루션인 스튜디오를 제공하여 게임 개발자의 진입 장벽을 낮출 수 있다고 하며 또한, 개발자가 인텔리전트 클라우드를 사용하여 게임을 빌드 및 운영하고, 게임 데이터를 분석하고, 전반적인 게임 환경을 개선할 수 있다고도 합니다.
 게임 개발 및 운영에 있어서 클라우드를 효율적으로 활용할 수 있는 플랫폼인 것은 확실하다고 할 수 있을 거 같네요.
 
 ![playfab-customer-introduce](images/playfab_customer_intro.png)
@@ -43,13 +37,12 @@ PlayFab의 백 엔드 서비스는 게임과 함께 확장되고 플레이어의
 ---
 
 ## Azure PlayFab Metric 도출
-**미팅에서 도출된 고객의 요구 사항은 
-“Azure 리소스, PlayFab 리소스에 대한 대시보드 구성 / 모니터링 / 관제를 해줄 수 있나?”
-라는 내용이었습니다.**
+**미팅에서 도출된 고객의 요구 사항은 “Azure 리소스, PlayFab 리소스에 대한 대시보드 구성 / 모니터링 / 관제를 해줄 수 있나?”라는 내용이었습니다.**
 
 ![playfab-grafana-introduce](images/playfab_grafana_intro.png)
 
 그래서 다음과 같이 고려해 보았습니다.
+
 * metric 수집 : Azure Monitor Or Azure Data Explorer
 * 대시보드 구성, 모니터링 : Grafana 이용
 * 관제 : 회사 NOC 솔루션 이용
@@ -60,12 +53,11 @@ Azure PlayFab 공식 문서들을 보던 중, VM metrics 항목이라는 Article
 https://learn.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/vm-metrics
 
 system level metrics (CPU/RAM/etc.) for the Virtual Machines을 제공한다고 되어 있긴 합니다만, 웹 서비스 형태로 보여주기만 하는 것 같습니다. 
-그리고 현재, 미리보기 상태이며 실험적이라고 되어 있네요. 난감한 상황입니다.
+현재 미리보기 상태이며 실험적이라고 되어 있네요. 난감한 상황입니다.
 
 ![playfab-vm-lookup](images/playfab_vm_lookup.png)
 
 ![playfab-vm-metric-view](images/playfab_vm_metric_view.png)
-
 
 그래서, 단일 게임 타이틀에 대한 모든 이벤트와 데이터들을 저장하고 있는 데이터베이스를 사용하기로 하였습니다. 
 Azure PlayFab 은 단일 게임 타이틀에 대한 모든 이벤트 및 처리된 데이터를 클라우드의 단일 타이틀 데이터베이스로 수집합니다. 
@@ -82,37 +74,37 @@ Json 포맷 데이터를 예시로 들자면 아래와 같습니다.
 <pre>
 <code>
 {
-"EntityLineage":{
-"namespace":"3B9C1D25BE7879D5",
-"title":"EADED"
-},
-"Timestamp":"2022-09-13T14:03:40.2573414Z",
-"PayloadContentType":"Json",
-"SchemaVersion":"2.0.1",
-"Originator":{
-"Type":"service",
-"Id":"playfab"
-},
-"FullName":{
-"Namespace":"playfab.servers",
-"Name":"vm_unhealthy"
-},
-"Payload":{
-"BuildId":"50de9471-a984-42ba-b67a-5927c1737e99",
-"Region":"KoreaCentral",
-"VmId":"xxxx:KoreaCentral:xxxxx_5463xxx2-3ff9-41ef-b2f0-898xxxxd9d8:984a9c2b-3506-4ae3-aef4-844c4c615680",
-"HealthStatus":"NoServerHeartbeat"
-},
-"Id":"19c2f0f5903741c4b4ff632d303d9751",
-"Entity":{
-"Type":"title",
-"Id":"xxxxx"
-}
+  "EntityLineage":{
+  "namespace":"3B9C1D25BE7879D5",
+  "title":"EADED"
+  },
+  "Timestamp":"2022-09-13T14:03:40.2573414Z",
+  "PayloadContentType":"Json",
+  "SchemaVersion":"2.0.1",
+  "Originator":{
+  "Type":"service",
+  "Id":"playfab"
+  },
+  "FullName":{
+  "Namespace":"playfab.servers",
+  "Name":"vm_unhealthy"
+  },
+  "Payload":{
+    "BuildId":"50de9471-a984-42ba-b67a-5927c1737e99",
+    "Region":"KoreaCentral",
+    "VmId":"xxxx:KoreaCentral:xxxxx_5463xxx2-3ff9-41ef-b2f0-898xxxxd9d8:984a9c2b-3506-4ae3-aef4-844c4c615680",
+    "HealthStatus":"NoServerHeartbeat"
+  },
+  "Id":"19c2f0f5903741c4b4ff632d303d9751",
+  "Entity":{
+  "Type":"title",
+  "Id":"xxxxx"
+  }
 }
 </code>
 </pre>
 
-그리고, 아래와 같이 playfab.servers.vm_unhealthy 이벤트의 HealthStatus들을 찾을 수 있었습니다.
+아래와 같이 playfab.servers.vm_unhealthy 이벤트의 HealthStatus들을 찾을 수 있었습니다.
 
 https://docs.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/multiplayer-build-region-lifecycle
 
@@ -128,53 +120,52 @@ playfab.functions의 function_executed라는 이벤트가 있네요.
 <pre>
 <code>
 {
-"PayloadContentType":"Json",
-"EntityLineage":{
-"namespace":"3B9C1D25BE7879D5",
-"title":"EADED",
-"master_player_account":"1150114A725309AB",
-"title_player_account":"8D0013EA5D4FD0D0"
-},
-"SchemaVersion":"2.0.1",
-"Originator":{
-"Type":"title_player_account",
-"Id":"8D0013EA5D4FD0D0"
-},
-"Timestamp":"2022-11-13T20:27:49.9944743Z",
-"FullName":{
-"Namespace":"playfab.functions",
-"Name":"function_executed"
-},
-"Payload":{
-"Source":"API",
-"ExecutionTimeMilliseconds":1105,
-"ResultTooLarge":false,
-"FunctionName":"xxxxxxxxxx",
-"Result":{
-"ErrorCode":0,
-"values":{
-"IPV4Address":"20.196.197.59",
-"Port":"30001"
-}
-}
-},
-"Id":"001301a3a612410f8d8b120eb0727314",
-"Entity":{
-"Type":"title_player_account",
-"Id":"8D0013EA5D4FD0D0"
-},
-"OriginInfo":{
-}
+  "PayloadContentType":"Json",
+  "EntityLineage":{
+  "namespace":"3B9C1D25BE7879D5",
+  "title":"EADED",
+  "master_player_account":"1150114A725309AB",
+  "title_player_account":"8D0013EA5D4FD0D0"
+  },
+  "SchemaVersion":"2.0.1",
+  "Originator":{
+  "Type":"title_player_account",
+  "Id":"8D0013EA5D4FD0D0"
+  },
+  "Timestamp":"2022-11-13T20:27:49.9944743Z",
+  "FullName":{
+  "Namespace":"playfab.functions",
+  "Name":"function_executed"
+  },
+  "Payload":{
+    "Source":"API",
+    "ExecutionTimeMilliseconds":1105,
+    "ResultTooLarge":false,
+    "FunctionName":"xxxxxxxxxx",
+    "Result":{
+      "ErrorCode":0,
+      "values":{
+        "IPV4Address":"20.196.197.59",
+        "Port":"30001"
+      }
+    }
+  },
+  "Id":"001301a3a612410f8d8b120eb0727314",
+  "Entity":{
+    "Type":"title_player_account",
+    "Id":"8D0013EA5D4FD0D0"
+  },
+  "OriginInfo":{
+  }
 }
 </code>
 </pre>
 
 이상을 종합하여 수집할 항목들을 리스트업 해 봅니다. (Functions, Storage 의 Name은 임의로 A,B라 하였습니다.)
 
-## 표 작성 필요
+PlayFab VM 리소스 이벤트에만 관제를 적용하기로 합니다.
 
-
-위의 항목 중 PlayFab VM 리소스 이벤트에만 관제를 적용하기로 합니다.
+![metric_list](images/metric_list.png)
 
 ---
 
@@ -299,8 +290,7 @@ let StopTime=datetime(${__to:date});
 | summarize Count=sum(Count) by bin(Timestamp, 1m)
 </code></pre>
 
-그래서 저는 위와 같이 작성한 KQL Query를 사용하여 모니터링 대시보드를 따로 구성하고 그 컴포넌트 각각에 Alert를 적용하기로 하였습니다.
-
+그래서, 위와 같이 작성한 KQL Query를 사용하여 모니터링 대시보드를 따로 구성하고 그 컴포넌트 각각에 Alert를 적용하기로 하였습니다.
 마찬가지로, Azure PlayFab API 이벤트들도 시각화 합니다.
 
 ![grafana_playfab_apicall_edit](images/grafana_playfab_apicall_edit.png)
@@ -328,7 +318,7 @@ Grafana의 컴포넌트 시각화 기능을 사용하여 불러온 data를 시�
 
 ![grafana_functionrequest_edit_adjust](images/grafana_functionrequest_edit_adjust.png)
 
-그리하여, 최종적으로 VM unhealthy 이벤트를 1분 단위의 집계로 표현한 관제용 대시보드 2개
+최종적으로 VM unhealthy 이벤트를 1분 단위의 집계로 표현한 관제용 대시보드 2개
 
 ![grafana_noc_VMmonitoring](images/grafana_noc_VMmonitoring.png)
 ![grafana_noc_VMmonitoring2](images/grafana_noc_VMmonitoring2.png)
