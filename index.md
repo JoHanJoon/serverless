@@ -380,14 +380,9 @@ Azure Managed Grafana를 이용하시는 분들, Azure PlayFab 서비스를 모�
 ---
 
 ## 출처
-https://learn.microsoft.com/en-us/gaming/playfab/what-is-playfab
-https://learn.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/vm-metrics
-https://docs.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/multiplayer-build-region-lifecycle
-https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal?source=recommendations
-https://learn.microsoft.com/en-us/gaming/playfab/features/insights/connectivity/connecting-grafana-to-insights
-https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/
-
-
-
-
-
+https://learn.microsoft.com/en-us/gaming/playfab/what-is-playfab  
+https://learn.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/vm-metrics  
+https://docs.microsoft.com/en-us/gaming/playfab/features/multiplayer/servers/multiplayer-build-region-lifecycle  
+https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal?source=recommendations  
+https://learn.microsoft.com/en-us/gaming/playfab/features/insights/connectivity/connecting-grafana-to-insights  
+https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/  
